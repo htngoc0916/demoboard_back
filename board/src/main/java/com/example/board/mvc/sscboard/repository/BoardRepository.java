@@ -11,7 +11,9 @@ import java.util.List;
 public interface BoardRepository extends JpaRepository<Board, Long> {
     //check title when insert
     List<Board> findByTitle(String title);
+    List<Board> findAllByOrderByIdDesc();
 
-    @Query(value = "SELECT * FROM BOARD_POST WHERE TITLE COLLATE utf8_general_ci LIKE %:title%", nativeQuery = true)
+    @Query(value = "SELECT * FROM BOARD_POST WHERE REPLACE(TRIM(TITLE), ' ', '')  COLLATE utf8_general_ci LIKE CONCAT('%',:title,'%')", nativeQuery = true)
     List<Board> findByTitleLike(@Param("title") String title);
+
 }

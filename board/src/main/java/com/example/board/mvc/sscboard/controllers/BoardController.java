@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
-
 //thiet lap cho phep no la mot controller
 @RestController
 @RequestMapping("/api/boards")
@@ -22,11 +21,11 @@ public class BoardController {
     @Autowired
     private BoardServices boardServices;
 
-    //search all
+    //search alByOr
     @GetMapping("/")
     @CrossOrigin(origins = "http://localhost:3000")
-    ResponseEntity<ResponseObject> findAll(){
-        List<Board> foundBoard = repository.findAll();
+    ResponseEntity<ResponseObject> searchByDesc(){
+        List<Board> foundBoard = repository.findAllByOrderByIdDesc();
         return ResponseEntity.status(HttpStatus.OK).body(
                 new ResponseObject("ok", "Query board successfully", foundBoard)
         );
@@ -35,7 +34,7 @@ public class BoardController {
     //search with ID
     @GetMapping("")
     @CrossOrigin(origins = "http://localhost:3000")
-    ResponseEntity<ResponseObject> findById(@RequestParam Long id){
+    ResponseEntity<ResponseObject> searchByID(@RequestParam Long id){
         //optional co the tra ve ket qua sau khi tim kiem bang ham findById
         Optional<Board> foundBoard = repository.findById(id);
         //check xem no khac null hay khong
