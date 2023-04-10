@@ -13,7 +13,7 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
     List<Board> findByTitle(String title);
     List<Board> findAllByOrderByIdDesc();
 
-    @Query(value = "SELECT * FROM BOARD_POST WHERE REPLACE(TRIM(TITLE), ' ', '')  COLLATE utf8_general_ci LIKE CONCAT('%',:title,'%')", nativeQuery = true)
+    @Query(value = "SELECT * FROM BOARD_POST WHERE REPLACE(TRIM(TITLE), ' ', '')  COLLATE utf8_general_ci LIKE CONCAT('%',:title,'%') ORDER BY CREATED_TIME DESC", nativeQuery = true)
     List<Board> findByTitleLike(@Param("title") String title);
 
 }
